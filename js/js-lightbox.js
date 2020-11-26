@@ -6,10 +6,13 @@ const lightbox = document.querySelector('div[class="lightbox js-lightbox"]');
 const img = document.querySelectorAll("img[data-name]");
 const body = document.body;
 const oldHttp = lightboxImage.src;
+const KEY_LEFT=37;
+const KEY_RIGHT=39;
+const KEY_ESC=27;
 let i;
 
 jsLightbox.addEventListener("click", (event) => {
-  if(event.target.nodeName=='IMG'){
+  if(event.target.nodeName==='IMG'){
     event.preventDefault();
     lightboxImage.src = oldHttp;
     lightbox.classList.add("is-open");
@@ -27,18 +30,18 @@ function closeWind(event) {
   event.preventDefault();
   lightbox.classList.remove("is-open");
   lightboxImage.src = oldHttp;
+  body.removeEventListener('keydown',func(event));
 }
 
 function func(event) {
-  if (event.keyCode == 39) {
-    i == img.length - 1 ? (i = 0) : i++;
+  if (event.keyCode === KEY_RIGHT) {
+    i === img.length - 1 ? (i = 0) : i++;
     lightboxImage.src = img[i].dataset.source;
-  } else if (event.keyCode == 37) {
+  } else if (event.keyCode === KEY_LEFT) {
     i < 1 ? (i = img.length - 1) : i--;
     lightboxImage.src = img[i].dataset.source;
-  } else if (event.keyCode == 27) {
-    closeWind(event);
-    body.removeEventListener('keydown',func(event));
+  } else if (event.keyCode === KEY_ESC) {
+    closeWind(event);    
   }  
 };
 })();
